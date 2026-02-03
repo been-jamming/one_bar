@@ -1,0 +1,7 @@
+{
+	"pack": {
+		"description": "Everyone gets one health bar",
+		"min_format": 48,
+		"max_format": 95
+	}
+}
