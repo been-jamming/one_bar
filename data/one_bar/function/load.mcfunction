@@ -1,5 +1,5 @@
-#set every player's max health to 15 hearts
-execute as @a run attribute @s minecraft:max_health base set 30
+#set every player's max health to 10 hearts
+execute as @a run attribute @s minecraft:max_health base set 20
 
 #reset all scoreboard entries
 scoreboard players reset @a
