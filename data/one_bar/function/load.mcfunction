@@ -1,11 +1,17 @@
-#set every player's max health to 10 hearts
-execute as @a run attribute @s minecraft:max_health base set 20
+#set every player's max health to 12 hearts
+execute as @a run attribute @s minecraft:max_health base set 24
 
 #reset all scoreboard entries
-scoreboard players reset @a
+scoreboard objectives remove health
+scoreboard objectives remove last_health
+scoreboard objectives remove min_health
+scoreboard objectives remove max_health
+scoreboard objectives remove deaths
+scoreboard objectives remove joins
+scoreboard objectives remove leaves
 
 #create a scoreboard entry for the player's current health
-scoreboard objectives add health health "Health"
+scoreboard objectives add health dummy "Health"
 
 #create a scoreboard entry for the player's last health
 scoreboard objectives add last_health dummy "Last Health"

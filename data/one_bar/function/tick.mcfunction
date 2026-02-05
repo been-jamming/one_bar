@@ -3,22 +3,25 @@ execute if entity @p[scores={deaths=1..}] run kill @a[gamemode=survival]
 scoreboard players reset @a[scores={deaths=1..}] deaths
 
 #Reset everyone's health bar maximum
-execute as @a run attribute @s minecraft:max_health base set 20
+execute as @a run attribute @s minecraft:max_health base set 24
 
-#If someone has left and rejoined, mark them as joined
-scoreboard players set @a[scores={leaves=1..}] joins 0
-scoreboard players reset @a[scores={leaves=1..}] leaves
+#Get everyone's health. Instead of using a scoreboard objective, using the data command allows us to ignore the absorption effect
+execute as @a store result score @s health run data get entity @s Health
 
 #Make sure everyone has a joins score
 scoreboard players add @a joins 0
+scoreboard players add @a leaves 0
 
-#If someone just joined, set their health to everyone else's
-scoreboard players operation @a[scores={joins=0}] min_health = @r[scores={joins=1..}] health
-execute as @a[scores={joins=0}] run scoreboard players operation @s last_health = @s health
+#If someone has left and rejoined, mark them as joined
+scoreboard players set @a[scores={leaves=1..}] joins 0
 
 #Set the minimum and maximum health scoreboard entries to 0
 scoreboard players set @a min_health 1000
 scoreboard players set @a max_health 0
+
+#If someone just joined, set their health to everyone else's
+scoreboard players operation @a[scores={joins=0}] min_health = @r[scores={joins=1..}] health
+execute as @a[scores={joins=0}] run scoreboard players operation @s last_health = @s min_health
 
 #Compute the minimum and maximum health of the players whose health changed this tick
 execute at @a as @a run function one_bar:get_min_max_health
@@ -40,4 +43,5 @@ execute if entity @p[scores={health=1..4}] run weather thunder 3600
 
 #If someone just joined, mark them as no longer having just joined
 scoreboard players set @a[scores={joins=0}] joins 1
+scoreboard players set @a[scores={leaves=1..}] leaves 0
 
